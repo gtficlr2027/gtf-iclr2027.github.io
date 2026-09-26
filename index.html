@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Grasping the Future</title>
+<meta name="description" content="Joint 3D hand-object forecasting from internet videos. Anonymous ICLR 2027 submission.">
+<style>
+@font-face{font-family:"Hanken Grotesk";src:url(assets/fonts/HankenGrotesk-Regular.ttf) format("truetype");font-weight:400 500;font-display:swap}
+@font-face{font-family:"Hanken Grotesk";src:url(assets/fonts/HankenGrotesk-Bold.ttf) format("truetype");font-weight:600 700;font-display:swap}
+:root{--ink:#29271F;--t2:#5C5547;--muted:#8B8270;--sky:#EDF2F7;--line:#C2CFDC;--strong:#A9B9C9;--slate:#3E5872;
+--obs:#F2B26E;--pred:#9678DA;--gt:#8CC0EE;--gtl:#2F6BB0;--bg:#FFFFFF;--card:#F7F9FB;--maxw:1120px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hanken Grotesk",system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--slate)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+header.hero{padding:56px 0 24px;text-align:center}
+.venue{display:inline-block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--t2);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--sky)}
+h1{font-size:clamp(28px,4.4vw,46px);line-height:1.12;margin:18px auto 10px;max-width:900px;font-weight:700;letter-spacing:-.01em}
+.sub{font-size:clamp(16px,2vw,19px);color:var(--t2);max-width:760px;margin:0 auto}
+.authors{margin:18px 0 6px;color:var(--t2)}
+.links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0 8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;border:1px solid var(--strong);background:#fff;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+figure{margin:0}
+.teaser{margin:26px 0 8px}
+.teaser img,.fig img{width:100%;height:auto;display:block;border-radius:12px}
+figcaption{font-size:14.5px;color:var(--t2);margin-top:10px;line-height:1.55}
+section{padding:40px 0;border-top:1px solid #EEF1F4}
+h2{font-size:clamp(22px,2.8vw,30px);margin:0 0 14px;letter-spacing:-.005em}
+h3{font-size:19px;margin:22px 0 8px}
+p{margin:0 0 14px}
+.abstract{max-width:860px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14.5px;color:var(--t2);margin:6px 0 18px}
+.sw{display:inline-block;width:13px;height:13px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+.tab{font:inherit;font-size:15px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--t2);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.taskdesc{color:var(--t2);margin:6px 0 16px;min-height:1.6em}
+.vgrid{display:grid;grid-template-columns:1fr;gap:22px}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px}
+.vcard video{width:100%;height:auto;display:block;border-radius:8px;background:#fff}
+.vmeta{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--t2);padding:6px 4px 0}
+.badge{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;background:#fff;white-space:nowrap}
+.note{font-size:14px;color:var(--muted);margin-top:14px}
+pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto;font-size:13.5px}
+footer{padding:30px 0 50px;color:var(--muted);font-size:14px;text-align:center}
+@media (max-width:760px){.vgrid{grid-template-columns:1fr}body{font-size:16px}header.hero{padding-top:36px}}
+</style>
+</head>
+<body>
+<header class="hero wrap">
+  <span class="venue">Anonymous ICLR 2027 submission</span>
+  <h1>Grasping the Future: Joint 3D Hand–Object Forecasting from Internet Videos</h1>
+  <p class="sub">Supplementary videos: qualitative predictions for five tasks from a single model.</p>
+</header>
+
+<main>
+<section class="wrap" id="results">
+  <p>Each video shows one held-out clip. Top: the observed frame, the input given to the model, and the reference motion. Bottom: the best of 20 predictions and all 20 samples, animated over the dimmed frame. The strip underneath shows which states are observed and which are predicted for each hand and the object.</p>
+  <div class="legend">
+    <span><i class="sw" style="background:var(--obs)"></i>Observed (given to the model)</span>
+    <span><i class="sw" style="background:var(--pred)"></i>Predicted</span>
+    <span><i class="sw" style="background:var(--gt);outline:1px solid var(--gtl)"></i>Reference motion or given goal</span>
+  </div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <p class="taskdesc" id="taskdesc"></p>
+  <div class="vgrid" id="vgrid"></div>
+  <p class="note">Cases come from held-out MoCap sequences and from Action100M internet videos, where the reference is our extracted pseudo-ground truth. Samples are drawn independently; "best of 20" is the sample closest to the reference. For display, predicted and reference motion is lightly smoothed over time (about 0.1 s), and hands that penetrate the object are shifted rigidly out of it by a few millimetres without lifting fingers that touch it; hand poses and finger articulation are unchanged.</p>
+</section>
+
+</main>
+
+<footer class="wrap">Anonymous project page for double-blind review.</footer>
+
+<script src="results.js"></script>
+<script>
+(function(){
+  const tabs = document.getElementById("tabs"), grid = document.getElementById("vgrid"), desc = document.getElementById("taskdesc");
+  const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
+    const v = e.target; if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause();
+  }), {rootMargin: "150px"}) : null;
+  function show(i){
+    [...tabs.children].forEach((b, k) => b.setAttribute("aria-selected", k === i ? "true" : "false"));
+    const t = RESULTS[i]; desc.textContent = t.desc; grid.innerHTML = "";
+    t.videos.forEach(v => {
+      const c = document.createElement("div"); c.className = "vcard";
+      c.innerHTML = `<video muted loop playsinline preload="none" poster="${v.poster}" data-src="${v.src}" aria-label="${t.name}: ${v.title}"></video>
+        <div class="vmeta"><span>${v.title}</span><span class="badge">${v.source}</span></div>`;
+      grid.appendChild(c); const vid = c.querySelector("video");
+      if (io) io.observe(vid); else { vid.src = v.src; vid.play().catch(() => {}); }
+    });
+  }
+  RESULTS.forEach((t, i) => { const b = document.createElement("button"); b.className = "tab"; b.setAttribute("role", "tab"); b.textContent = t.name; b.onclick = () => show(i); tabs.appendChild(b); });
+  show(0);
+})();
+</script>
+</body>
+</html>
