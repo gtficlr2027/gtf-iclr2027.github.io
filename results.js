@@ -21,6 +21,12 @@ const RESULTS = [
     "poster": "videos/mocap__future_prediction__19.jpg",
     "title": "Manipulation · screwdriver",
     "source": "MoCap"
+   },
+   {
+    "src": "videos/mocap__future_prediction__12.mp4",
+    "poster": "videos/mocap__future_prediction__12.jpg",
+    "title": "Empty · kettle",
+    "source": "MoCap"
    }
   ]
  },
